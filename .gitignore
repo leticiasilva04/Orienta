@@ -1,0 +1,14 @@
+# Ignorar arquivos Python
+__pycache__/
+*.py[cod]
+
+# Ignorar ambientes virtuais
+venv/
+env/
+
+# Ignorar arquivos de configuração do IDE
+.idea/
+*.sublime-workspace
+
+# Ignorar arquivos de log
+*.log
