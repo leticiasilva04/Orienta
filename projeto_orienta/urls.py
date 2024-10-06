@@ -16,10 +16,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from chat import views
+
+from projeto_orienta.views import orientador  # Import the lista_tcc view
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', views.home_chat, name='home_chat'),
-    path('chat/<str:room_name>/', views.room, name='room'),
+    path('admin/', admin.site.urls),  
+    path('orientador/', orientador, name='orientador'),
 ]
