@@ -14,7 +14,9 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+
 from django.contrib import admin
+<<<<<<< HEAD
 from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
@@ -33,5 +35,20 @@ urlpatterns = [
     path('teste/', views.teste_view, name='teste'),
     path('teste_success', views.teste_success, name='teste_success'),  # create a success page
 
+=======
+from django.urls import path, include
+from chat import views
+from django.contrib.auth.views import LogoutView
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('', views.home_chat, name='home_chat'),    
+    path('chat/<str:room_name>/', views.room, name='sala1'), 
+    path('', views.home_chat, name='home_chat'),
+    path('chat/<str:room_name>/', views.room, name='room'),
+    path('forms/', include('forms.urls')),  # Incluindo as URLs da pasta forms
+    path('accounts/', include('django.contrib.auth.urls')), 
+     path('logout/', LogoutView.as_view(next_page='/admin/login/?next=/admin/app_tcc/user/'), name='logout'),
+>>>>>>> d58ab90a25e685ff52cb2abb33445af036ba18a0
 ]
 

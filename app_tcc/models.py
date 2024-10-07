@@ -111,6 +111,7 @@ class Task(models.Model):
     def __str__(self):
         return self.titulo
 
+<<<<<<< HEAD
 
 class Teste(models.Model):
 
@@ -124,3 +125,15 @@ class Teste(models.Model):
 
     def __str__(self):
         return self.titulo
+=======
+        from django.contrib.auth.models import User
+
+def user_is_orientador(user):
+    return hasattr(user, 'orientador')
+
+def user_is_aluno(user):
+    return hasattr(user, 'aluno')
+
+User.add_to_class("is_orientador", property(lambda u: user_is_orientador(u)))
+User.add_to_class("is_aluno", property(lambda u: user_is_aluno(u)))
+>>>>>>> d58ab90a25e685ff52cb2abb33445af036ba18a0

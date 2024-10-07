@@ -1,10 +1,8 @@
 from django.shortcuts import render, redirect
 
 def room(request, room_name):
-
-    chat = "Chat"
     return render(request, 'room.html', {
-        'room_name': chat
+        'room_name': room_name
     })
 
 def home_chat(request):
