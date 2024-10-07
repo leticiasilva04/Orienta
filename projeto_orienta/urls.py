@@ -24,6 +24,8 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', views.home_chat, name='home_chat'),    
+    path('chat/<str:room_name>/', views.room, name='sala1'), 
     path('', views.home_chat, name='home_chat'),
     path('chat/<str:room_name>/', views.room, name='room'),
     path('forms/', include('forms.urls')),  # Incluindo as URLs da pasta forms
