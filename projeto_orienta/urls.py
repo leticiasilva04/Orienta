@@ -20,6 +20,7 @@ from chat import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.home_chat, name='home_chat'),
-    path('chat/<str:room_name>/', views.room, name='room'),
+    path('', views.home_chat, name='home_chat'),    
+    path('chat/<str:room_name>/', views.room, name='sala1'), 
 ]
+
