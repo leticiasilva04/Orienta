@@ -16,10 +16,22 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.conf import settings
+from django.conf.urls.static import static
 
-from projeto_orienta.views import orientador  # Import the lista_tcc view
+from projeto_orienta.views import orientador
+#from projeto_orienta.views import teste
+from projeto_orienta.views import index
+from . import views
 
 urlpatterns = [
-    path('admin/', admin.site.urls),  
-    path('orientador/', orientador, name='orientador'),
+    path('admin/', admin.site.urls),
+    path('', index, name='index'),
+    path('index/', index, name='index_page'),
+    #path('teste/', teste, name='teste'),  
+    path('orientador/', views.orientador, name='orientador'),
+    path('teste/', views.teste_view, name='teste'),
+    path('teste_success', views.teste_success, name='teste_success'),  # create a success page
+
 ]
+
