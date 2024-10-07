@@ -1,0 +1,76 @@
+
+
+<!DOCTYPE html>
+{% load static %}
+
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ tcc.titulo }}</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <div class="container">
+
+       <div class="tcc-capa">
+        {% if tcc.capa_tcc %}
+         <img src="{{ tcc.capa_tcc.url }}" alt="Capa do TCC" class="capa-imagem">
+        {% else %}
+        <div class="header">
+        </div>
+        {% endif %}
+        </div>
+
+        <!-- Header com título e status -->
+        <div class="header">
+            <h1>{{ tcc.titulo }}</h1>
+            <span class="status">{{ tcc.status }}</span>
+            {% with user=tcc.orientador %}   <!-- HARDCODE PRA APARECER O BOTAO DE EDITAR! REMOVER DPS DO LOGIN!!! -->
+            {% if user == tcc.orientador %}
+            <a href="{% url 'editar_tcc' tcc.id %}" class="edit-button">Editar TCC</a>
+            {% endif %}
+            {% endwith %}
+        </div>
+
+        <!-- Descrição e membros -->
+        <div class="description">
+            <h2>Descrição</h2>
+            <p>{{ tcc.descricao }}</p>
+
+            <h3>Membros</h3>
+            <div class="members">
+                <div>
+                    <p><strong>Orientador(a):</strong> {{ tcc.orientador }}</p>
+                </div>
+            </div>
+            <div class="members">
+                {% for autor in tcc.autores.all %}
+                <div>
+                    <p><strong>Autor(es):</strong> {{ autor }}</p>
+                </div>
+                {% endfor %}
+            </div>
+       
+
+        <!-- Curso e Datas -->
+        <div class="course">
+            <h4>Curso</h4>
+            <p>{{ tcc.curso }}</p>
+
+            <h4>Datas</h4>
+            <p><strong>Data de Início:</strong> {{ tcc.data_inicio }}</p>
+            <p><strong>Data de Entrega:</strong> {{ tcc.data_entrega }}</p>
+        </div>
+
+        <!-- Painel com botões -->
+        <div class="panel">
+            <div class="panel-item"> <a href="{% url 'room' room_name='room' %}" class="chat-button">Chat</a></div>
+        </div>
+
+        
+    </div>
+</body>
+</html>
+
+

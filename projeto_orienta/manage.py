@@ -20,9 +20,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-    
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-   
-#Pra criar as pastas das imagens    
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
