@@ -19,8 +19,6 @@ from django.contrib import admin
 from django.urls import path, include
 from chat import views
 from django.contrib.auth.views import LogoutView
-from django.conf import settings
-from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -29,10 +27,8 @@ urlpatterns = [
     path('forms/', include('forms.urls')),  # Incluindo as URLs da pasta forms
     path('accounts/', include('django.contrib.auth.urls')), 
     path('logout/', LogoutView.as_view(next_page='/admin/login/?next=/admin/app_tcc/user/'), name='logout'),
-    path('tcc/', include('app_tcc.urls')),
+    path('tcc/', include('app_tcc.urls')),  # Inclui as URLs do app_tcc
 ]
 
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 

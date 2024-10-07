@@ -48,7 +48,6 @@ class TCC(models.Model):
         ('concluido', 'Concluído'),
     ]
 
-    id = models.AutoField(primary_key=True)
     titulo = models.CharField(max_length=255)
     descricao = models.TextField()
     capa_tcc = models.ImageField(upload_to='tcc_covers/', blank=True, null=True)
