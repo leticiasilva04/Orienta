@@ -1,27 +1,32 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 
+
 class Curso(models.Model):
     nome = models.CharField(max_length=100)
 
     def __str__(self):
         return self.nome
 
+
 class User(AbstractUser):
     # Papel de cada usuário
     ORIENTADOR = 'orientador'
     ORIENTANDO = 'orientando'
     ADMIN = 'admin'
-    
+
     PAPEL_CHOICES = [
         (ORIENTADOR, 'Orientador'),
         (ORIENTANDO, 'Orientando'),
         (ADMIN, 'Admin'),
     ]
 
-    papel = models.CharField(max_length=15, choices=PAPEL_CHOICES, default=ORIENTANDO)
-    imagem_perfil = models.ImageField(upload_to='profile_pics/', blank=True, null=True)
-    curso = models.ForeignKey(Curso, on_delete=models.SET_NULL, null=True, blank=True)
+    papel = models.CharField(
+        max_length=15, choices=PAPEL_CHOICES, default=ORIENTANDO)
+    imagem_perfil = models.ImageField(
+        upload_to='profile_pics/', blank=True, null=True)
+    curso = models.ForeignKey(
+        Curso, on_delete=models.SET_NULL, null=True, blank=True)
 
     # Adicione os related_names para evitar conflitos
     groups = models.ManyToManyField(
@@ -29,7 +34,7 @@ class User(AbstractUser):
         related_name='app_tcc_user_set',  # Mude o nome conforme necessário
         blank=True,
     )
-    
+
     user_permissions = models.ManyToManyField(
         'auth.Permission',
         related_name='app_tcc_user_set',  # Mude o nome conforme necessário
@@ -38,6 +43,7 @@ class User(AbstractUser):
 
     def __str__(self):
         return self.username
+
 
 class TCC(models.Model):
     STATUS_CHOICES = [
@@ -51,16 +57,21 @@ class TCC(models.Model):
     id = models.AutoField(primary_key=True)
     titulo = models.CharField(max_length=255)
     descricao = models.TextField()
-    capa_tcc = models.ImageField(upload_to='tcc_covers/', blank=True, null=True)
+    capa_tcc = models.ImageField(
+        upload_to='tcc_covers/', blank=True, null=True)
     curso = models.ForeignKey(Curso, on_delete=models.CASCADE)
-    autores = models.ManyToManyField(User, related_name='tccs_autores', limit_choices_to={'papel': 'orientando'})
-    orientador = models.ForeignKey(User, related_name='tccs_orientador', on_delete=models.CASCADE, limit_choices_to={'papel': 'orientador'})
-    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='em andamento')
+    autores = models.ManyToManyField(
+        User, related_name='tccs_autores', limit_choices_to={'papel': 'orientando'})
+    orientador = models.ForeignKey(User, related_name='tccs_orientador',
+                                   on_delete=models.CASCADE, limit_choices_to={'papel': 'orientador'})
+    status = models.CharField(
+        max_length=20, choices=STATUS_CHOICES, default='em andamento')
     data_inicio = models.DateField()
     data_entrega = models.DateField()
 
     def __str__(self):
         return self.titulo
+
 
 class Message(models.Model):
     TIPO_CHOICES = [
@@ -71,13 +82,15 @@ class Message(models.Model):
     remetente = models.ForeignKey(User, on_delete=models.CASCADE)
     tcc = models.ForeignKey(TCC, on_delete=models.CASCADE)
     conteudo = models.TextField()
-    tipo = models.CharField(max_length=10, choices=TIPO_CHOICES, default='texto')
+    tipo = models.CharField(
+        max_length=10, choices=TIPO_CHOICES, default='texto')
     titulo_anexo = models.CharField(max_length=255, blank=True)
     tipo_anexo = models.CharField(max_length=50, blank=True)
     data_envio = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f'{self.remetente.username} - {self.tcc.titulo}'
+
 
 class Task(models.Model):
     STATUS_CHOICES = [
@@ -89,7 +102,8 @@ class Task(models.Model):
     tcc = models.ForeignKey(TCC, on_delete=models.CASCADE)
     titulo = models.CharField(max_length=255)
     descricao = models.TextField()
-    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pendente')
+    status = models.CharField(
+        max_length=20, choices=STATUS_CHOICES, default='pendente')
     data_entrega = models.DateField()
     atribuida_a = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -98,6 +112,21 @@ class Task(models.Model):
     def __str__(self):
         return self.titulo
 
+<<<<<<< HEAD
+
+class Teste(models.Model):
+
+    titulo = models.CharField(max_length=255)
+    capa_tcc = models.FileField(upload_to='capas/', default='')
+    
+    autores = models.TextField(default='')
+    orientador = models.CharField(max_length=50)
+    status = models.CharField(max_length=50)
+    data_entrega = models.DateField()    
+
+    def __str__(self):
+        return self.titulo
+=======
         from django.contrib.auth.models import User
 
 def user_is_orientador(user):
@@ -108,3 +137,4 @@ def user_is_aluno(user):
 
 User.add_to_class("is_orientador", property(lambda u: user_is_orientador(u)))
 User.add_to_class("is_aluno", property(lambda u: user_is_aluno(u)))
+>>>>>>> d58ab90a25e685ff52cb2abb33445af036ba18a0

@@ -37,9 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'app_tcc', 
-    'channels',
-    'chat',
+    'app_tcc.apps.AppTccConfig',
 ]
 
 
@@ -60,18 +58,20 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ASGI_APPLICATION = 'projeto_orienta.asgi.application'
-
-
 ROOT_URLCONF = 'projeto_orienta.urls'
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
+<<<<<<< HEAD
+        'DIRS': [BASE_DIR / 'app_tcc/templates'],
+        'APP_DIRS': True,
+=======
         'DIRS': [
             BASE_DIR / "forms/templates",  # Adiciona o caminho do template aqui
         ],
         'APP_DIRS': True, 
+>>>>>>> d58ab90a25e685ff52cb2abb33445af036ba18a0
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
@@ -96,14 +96,6 @@ DATABASES = {
     }
 }
 
-CHANNEL_LAYERS = {
-    'default': {
-        'BACKEND': 'channels_redis.core.RedisChannelLayer',
-        'CONFIG': {
-            "hosts": [('127.0.0.1', 6379)],  # Redis precisa estar instalado e rodando
-        },
-    },
-}
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
@@ -139,8 +131,15 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
+<<<<<<< HEAD
+STATIC_URL = 'static/'
+MEDIA_URL = 'img/'
+
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'app_tcc/static')]
+=======
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')] 
+>>>>>>> d58ab90a25e685ff52cb2abb33445af036ba18a0
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
