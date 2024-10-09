@@ -7,6 +7,9 @@
 </head>
 <body>
     <h1>Room: {{ room_name }}</h1>
+
+    <input id="username-input" type="text" placeholder="Enter your name">
+
     <div id="chat-log"></div>
     <input id="chat-message-input" type="text" placeholder="Digite sua mensagem">
     <button id="chat-message-submit">Enviar</button>
@@ -14,14 +17,16 @@
     <script>
         const roomName = "{{ room_name }}";
         const chatSocket = new WebSocket(
-            'ws://' + window.location.host + '/ws/chat/' + roomName + '/'
-        );
+    'ws://127.0.0.1:8001/ws/chat/' + roomName + '/'
+);
+
 
         chatSocket.onmessage = function(e) {
             const data = JSON.parse(e.data);
-            const chatLog = document.querySelector('#chat-log');
-            chatLog.innerHTML += `<div>${data.message}</div>`;
-            chatLog.scrollTop = chatLog.scrollHeight; // Scroll automático
+            const time = data.time;
+            document.querySelector('#chat-log').innerHTML += (time + " " + data.username + ': ' + data.message + '<br>');
+
+            chatLog.scrollTop = chatLog.scrollHeight;
         };
 
         chatSocket.onclose = function(e) {
@@ -37,9 +42,12 @@
 
         document.querySelector('#chat-message-submit').onclick = function(e) {
             const messageInputDom = document.querySelector('#chat-message-input');
+            const usernameInputDom = document.querySelector('#username-input');
+            const username = usernameInputDom.value || 'Anonymous';
             const message = messageInputDom.value;
             chatSocket.send(JSON.stringify({
-                'message': message
+                'username': username,
+                'message': message,
             }));
             messageInputDom.value = '';
         };

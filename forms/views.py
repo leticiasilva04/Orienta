@@ -1,7 +1,5 @@
-# forms/views.py
-
 from django.shortcuts import render, redirect
-from .forms import TCCForm  # Corrigido para o caminho certo
+from .forms import TCCForm
 from django.contrib.auth.decorators import login_required
 
 @login_required
@@ -10,12 +8,12 @@ def criar_tcc(request):
         form = TCCForm(request.POST, request.FILES)
         if form.is_valid():
             tcc = form.save(commit=False)
-            tcc.orientador = request.user  # Define o orientador como o usuário logado
-            tcc.status = 'ativo'  # Define o status como ativo
+            tcc.orientador = request.user
+            tcc.status = 'ativo'
             tcc.save()
-            form.save_m2m()  # Salva a relação de muitos-para-muitos
-            return redirect('home_chat')  # Redireciona para a página inicial ou outra que você preferir
+            form.save_m2m()
+            return redirect('home_chat')
     else:
         form = TCCForm()
-    return render(request, 'criar_tcc.html', {'form': form})  # Use apenas o nome do template
+    return render(request, 'criar_tcc.html', {'form': form})
 
